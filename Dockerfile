@@ -1,15 +1,22 @@
 # Build stage: Use a Gradle image and manually install JDK 23
 FROM gradle:8.11-jdk AS build
 
-# Install JDK 23 in the build container
-RUN apt-get update && apt-get install -y openjdk-23-jdk && rm -rf /var/lib/apt/lists/*
+# Install dependencies and download OpenJDK 23
+RUN apt-get update && apt-get install -y \
+    wget \
+    tar \
+    && rm -rf /var/lib/apt/lists/* \
+    && wget https://download.java.net/java/early_access/jdk23/13/GPL/openjdk-23-ea+13_linux-x64_bin.tar.gz \
+    && tar -xzf openjdk-23-ea+13_linux-x64_bin.tar.gz -C /usr/local/ \
+    && rm openjdk-23-ea+13_linux-x64_bin.tar.gz
+
+# Set JAVA_HOME to JDK 23
+ENV JAVA_HOME=/usr/local/jdk-23
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 LABEL maintainer="codaholic.com"
 WORKDIR /app
 COPY . /app/
-
-# Set JAVA_HOME to JDK 23
-ENV JAVA_HOME=/usr/lib/jvm/java-23-openjdk-amd64
 
 # Run Gradle build
 RUN gradle clean bootJar
