@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
     tar \
     && rm -rf /var/lib/apt/lists/* \
     && wget https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-x64_bin.tar.gz \
-    && tar -xzf openjdk-23-ea+13_linux-x64_bin.tar.gz -C /usr/local/ \
-    && rm openjdk-23-ea+13_linux-x64_bin.tar.gz
+    && tar -xzf openjdk-23.0.1_linux-x64_bin.tar.gz -C /usr/local/ \
+    && rm openjdk-23.0.1_linux-x64_bin.tar.gz
 
 # Set JAVA_HOME to JDK 23
 ENV JAVA_HOME=/usr/local/jdk-23
