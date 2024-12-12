@@ -1,5 +1,5 @@
 # Build stage
-FROM gradle:23.0.1-jdk AS build
+FROM gradle:8.1-jdk AS build
 LABEL maintainer="codaholic.com"
 WORKDIR /
 COPY . /
